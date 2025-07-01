@@ -16,9 +16,12 @@ A simple kanban board view for Obsidian that displays tasks from your vault base
 ## Features
 
 - **Kanban Board View**: View your tasks in a kanban board layout with columns for "Backlog", "To Do", "In Progress", and "Done"
+- **Modern Drag & Drop**: Smooth drag and drop using Atlaskit's pragmatic drag and drop library 
 - **Task Detection**: Automatically detects tasks based on frontmatter tags
 - **Rich Metadata Display**: Shows project, priority, estimates, due dates, and more
 - **Click to Open**: Click on any task to open the corresponding note
+- **Add Tasks**: Add new tasks directly from any column with the + button
+- **Auto-refresh**: Board automatically updates when files are created, modified, or deleted
 - **Responsive Design**: Works well in different view sizes
 
 ## How to Use
@@ -65,6 +68,15 @@ author: "Your Name"
 1. Use the ribbon icon (layout icon) in the left sidebar
 2. Or use the command palette: "Open Kanban Board"
 3. The kanban view will open in a new pane
+
+### 5. Using Drag & Drop
+
+- **Move Tasks**: Click and drag any task card to move it between columns or reorder within the same column
+- **Status Update**: When you drop a task in a new column, its status is automatically updated in the markdown file
+- **Position Tracking**: Tasks maintain their order within columns using an `order` field in frontmatter
+- **Visual Feedback**: Columns highlight when you drag over them, and tasks show a visual indicator while being dragged
+- **Auto-scroll**: Columns automatically scroll when dragging near the edges
+- **Add Tasks**: Click the + button in any column header to add a new task with that column's status
 
 ## Example Task Files
 
