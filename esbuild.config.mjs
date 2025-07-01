@@ -34,12 +34,20 @@ const context = await esbuild.context({
 		...builtins],
 	format: "cjs",
 	target: "es2018",
+	jsx: "automatic",
 	logLevel: "info",
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
 	outfile: "main.js",
 	minify: prod,
 });
+
+const loaders = {
+	'.ts': 'ts',
+	'.tsx': 'tsx',
+	'.js': 'js',
+	'.json': 'json',
+};
 
 if (prod) {
 	await context.rebuild();

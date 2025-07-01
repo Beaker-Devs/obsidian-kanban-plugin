@@ -1,94 +1,145 @@
-# Obsidian Sample Plugin
+# Obsidian Kanban Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+> **⚠️ Active Development Disclaimer**  
+> This plugin is currently in active development. Features may change, bugs may exist, and the API is not yet stable. Use at your own risk and expect breaking changes in future updates.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+A simple kanban board view for Obsidian that displays tasks from your vault based on frontmatter metadata. **Inspired by Linear's UI design.**
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+## Screenshots
 
-## First time developing plugins?
+![Kanban Board View](screenshots/kanban-board.png)
+*Main kanban board interface showing tasks organized by status*
 
-Quick starting guide for new plugin devs:
+![Task Details](screenshots/task-details.png)
+*Example of a task card with metadata badges*
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## Features
 
-## Releasing new releases
+- **Kanban Board View**: View your tasks in a kanban board layout with columns for "Backlog", "To Do", "In Progress", and "Done"
+- **Task Detection**: Automatically detects tasks based on frontmatter tags
+- **Rich Metadata Display**: Shows project, priority, estimates, due dates, and more
+- **Click to Open**: Click on any task to open the corresponding note
+- **Responsive Design**: Works well in different view sizes
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+## How to Use
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+### 1. Create Task Notes
 
-## Adding your plugin to the community plugin list
+Create markdown files with the following frontmatter structure:
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## How to use
-
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+```yaml
+---
+tags: [task]
+status: todo  # or "doing" or "done"
+project: "Project Name"
+priority: high  # or medium, low
+estimate_hours: 2
+due: "2024-01-15"
+started_at: "2024-01-10"  # for in-progress tasks
+completed_at: "2024-01-12"  # for completed tasks
+author: "Your Name"
+---
 ```
 
-If you have multiple URLs, you can also do:
+### 2. Required Fields
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+- **tags**: Must include "task" (case-insensitive)
+- **status**: Determines which column the task appears in
+  - `backlog` → "Backlog" column
+  - `todo` or any other value → "To Do" column
+  - `doing` → "In Progress" column  
+  - `done` → "Done" column
+
+### 3. Optional Fields
+
+- **project**: Project name
+- **priority**: Task priority (high, medium, low)
+- **estimate_hours**: Time estimate in hours
+- **due**: Due date
+- **started_at**: When work began
+- **completed_at**: When work was completed
+- **author**: Task assignee
+
+### 4. Open the Kanban View
+
+1. Use the ribbon icon (layout icon) in the left sidebar
+2. Or use the command palette: "Open Kanban Board"
+3. The kanban view will open in a new pane
+
+## Example Task Files
+
+### To Do Task
+```yaml
+---
+tags: [task]
+status: todo
+project: "Website Redesign"
+priority: high
+estimate_hours: 8
+due: "2024-01-20"
+author: "John Doe"
+---
+
+# Design Homepage
+
+Create a new homepage design for the company website.
 ```
 
-## API Documentation
+### In Progress Task
+```yaml
+---
+tags: [task]
+status: doing
+project: "Website Redesign"
+priority: medium
+estimate_hours: 4
+started_at: "2024-01-10"
+author: "Jane Smith"
+---
 
-See https://github.com/obsidianmd/obsidian-api
+# Implement Navigation
+
+Build the main navigation component.
+```
+
+### Completed Task
+```yaml
+---
+tags: [task]
+status: done
+project: "Website Redesign"
+priority: low
+estimate_hours: 2
+completed_at: "2024-01-12"
+author: "Bob Johnson"
+---
+
+# Setup Project
+
+Initialize the project structure and dependencies.
+```
+
+## Installation
+
+1. Copy this plugin folder to your Obsidian vault's `.obsidian/plugins/` directory
+2. Enable the plugin in Obsidian settings
+3. Use the ribbon icon or command palette to open the kanban view
+
+## Development
+
+To build the plugin:
+
+```bash
+npm install
+npm run build
+```
+
+For development with hot reload:
+
+```bash
+npm run dev
+```
+
+## License
+
+MIT

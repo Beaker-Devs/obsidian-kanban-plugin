@@ -6,3 +6,629 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+
+/* Main Layout */
+.kanban-layout {
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+
+/* Sidebar Styles */
+.kanban-sidebar {
+	padding: 0;
+	width: 300px;
+	border-right: 1px solid var(--background-modifier-border);
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.kanban-sidebar.collapsed {
+	width: 50px;
+}
+
+.sidebar-header {
+	padding: 1rem;
+	border-bottom: 1px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.sidebar-toggle-btn {
+	background: none;
+	border: none;
+	color: var(--text-muted);
+	cursor: pointer;
+	padding: 0.5rem;
+	border-radius: 4px;
+	transition: background 0.15s;
+}
+
+.sidebar-toggle-btn:hover {
+	background: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+
+.sidebar-section {
+	padding: 1rem;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.sidebar-section-header {
+	margin: 0 0 0.75rem 0;
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--text-normal);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.sidebar-section-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+/* Filter Styles */
+.filter-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.filter-label {
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--text-muted);
+}
+
+.filter-select {
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	padding: 0.5rem;
+	font-size: 0.9rem;
+	color: var(--text-normal);
+	cursor: pointer;
+}
+
+.filter-select:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+}
+
+/* Statistics Styles */
+.stat-item {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.75rem;
+	background: var(--background-primary);
+	border-radius: 6px;
+	border: 1px solid var(--background-modifier-border);
+}
+
+.stat-icon {
+	font-size: 1.2rem;
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--background-secondary);
+	border-radius: 4px;
+}
+
+.stat-content {
+	flex: 1;
+}
+
+.stat-value {
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--text-normal);
+	line-height: 1.2;
+}
+
+.stat-label {
+	font-size: 0.8rem;
+	color: var(--text-muted);
+	margin-top: 0.1rem;
+}
+
+/* Quick Actions Styles */
+.quick-action-btn {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	width: 100%;
+	padding: 0.75rem;
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	color: var(--text-normal);
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: all 0.15s;
+}
+
+.quick-action-btn:hover {
+	background: var(--background-modifier-hover);
+	border-color: var(--interactive-accent);
+}
+
+.action-icon {
+	font-size: 1rem;
+	width: 1.5rem;
+	text-align: center;
+}
+
+/* Main Content Area */
+.kanban-main-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	transition: margin-left 0.3s ease;
+}
+
+.kanban-main-content.sidebar-collapsed {
+	margin-left: 0 !important;
+}
+
+/* Collapsed Sidebar Styles */
+.kanban-sidebar.collapsed .sidebar-section {
+	padding: 0.5rem;
+}
+
+.kanban-sidebar.collapsed .sidebar-section-header,
+.kanban-sidebar.collapsed .sidebar-section-content {
+	display: none;
+}
+
+.kanban-sidebar.collapsed .sidebar-toggle-btn {
+	transform: rotate(180deg);
+}
+
+/* Asana-style Kanban Board */
+.kanban-board {
+	display: flex;
+	gap: 0.1rem;
+	padding: 0.5rem 0.5rem;
+	background: var(--background-primary);
+	overflow-x: auto;
+	font-size: 0.95rem;
+	flex: 1;
+}
+
+.kanban-column {
+	flex: 1;
+	min-width: 220px;
+	background: var(--background-primary);
+	padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.1rem;
+	max-height: 90vh;
+	overflow: hidden;
+	font-size: 0.96em;
+}
+
+.kanban-column h3 {
+	margin: 0 0 0.5rem 0;
+	font-size: 0.95rem;
+	font-weight: 400;
+	color: var(--text-normal);
+	display: flex;
+	align-items: center;
+	gap: 0.1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.kanban-header-badge {
+	display: inline-block;
+	background: var(--background-modifier-active-hover);
+	color: var(--text-muted);
+	font-size: 0.9rem;
+	font-weight: 500;
+	border-radius: 999px;
+	padding: 0.1em 0.7em;
+	margin-left: 0.25em;
+}
+
+.kanban-tasks {
+	flex: 1;
+	overflow-y: auto;
+	padding-right: 2px;
+}
+
+.kanban-task {
+	background: var(--background-secondary);
+	border-radius: 5px;
+	border: 1px solid var(--background-modifier-border);
+	box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+	padding: 1.1rem 1rem 0.9rem 1rem;
+	margin-bottom: 0.8rem;
+	transition: box-shadow 0.15s, background 0.15s;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+	font-size: 0.97em;
+}
+
+.kanban-task:hover {
+	background: var(--background-modifier-hover);
+	box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+.task-header {
+	font-weight: 500;
+	font-size: 1.08rem;
+	margin-bottom: 0.2rem;
+	color: var(--text-normal);
+	line-height: 1.3;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.task-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 0.5rem;
+	align-items: center;
+}
+
+.task-meta-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.92rem;
+	color: var(--text-muted);
+	line-height: 1.2;
+}
+
+.task-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	width: 1em;
+	height: 1em;
+	margin-right: 0.1em;
+}
+
+.task-pill {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.18em 0.85em;
+	border-radius: 4px;
+	font-size: 0.92em;
+	font-weight: 500;
+	background: var(--background-secondary);
+	color: var(--text-muted);
+	border: 1px solid var(--background-modifier-border);
+}
+
+.task-pill svg {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0.35em;
+	width: 1em;
+	height: 1em;
+}
+
+/* Example color classes for pills (customize as needed) */
+.task-pill.priority-high {
+	background: rgba(90, 0, 0, 0.7);
+	color: #fff;
+	border: 1px solid rgba(90, 0, 0, 0.9);
+}
+.task-pill.priority-medium {
+	background: rgba(90, 50, 0, 0.7);
+	color: #fff;
+	border: 1px solid rgba(90, 50, 0, 0.9);
+}
+.task-pill.priority-low {
+	background: rgba(0, 60, 0, 0.7);
+	color: #fff;
+	border: 1px solid rgba(0, 60, 0, 0.9);
+}
+
+.task-pill.project {
+	background: var(--background-secondary);
+	color: var(--text-muted);
+	border: 1px solid var(--background-modifier-border);
+}
+.task-pill.sprint { background: #b9fbc0; color: #006a00; }
+
+/* Hide scrollbars for a cleaner look */
+.kanban-tasks::-webkit-scrollbar {
+	display: none;
+}
+.kanban-tasks {
+	scrollbar-width: none;
+}
+
+.priority-dot {
+	display: inline-block;
+	width: 0.7em;
+	height: 0.7em;
+	border-radius: 50%;
+	margin-right: 0.5em;
+	vertical-align: middle;
+}
+.priority-high {
+	background: #a10000;
+}
+.priority-medium {
+	background: #a15c00;
+}
+.priority-low {
+	background: #a1a1a1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.kanban-sidebar {
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		z-index: 1000;
+		transform: translateX(-100%);
+		transition: transform 0.3s ease;
+	}
+	
+	.kanban-sidebar.collapsed {
+		transform: translateX(0);
+	}
+	
+	.kanban-main-content {
+		margin-left: 0 !important;
+	}
+}
+
+/* --- Modern App-like Sidebar Styles --- */
+.sidebar-header-app {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.2rem 1.2rem 0.5rem 1.2rem;
+	gap: 0.7rem;
+}
+.sidebar-logo {
+	background: #2d3a4a;
+	color: #fff;
+	font-weight: 700;
+	font-size: 1.4rem;
+	border-radius: 8px;
+	width: 38px;
+	height: 38px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 0.5rem;
+}
+.sidebar-title {
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: #fff;
+	flex: 1;
+}
+.sidebar-avatar img {
+	border-radius: 50%;
+	width: 32px;
+	height: 32px;
+	object-fit: cover;
+	border: 2px solid #23272e;
+}
+
+.sidebar-search-bar {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1.2rem 1rem 1.2rem;
+}
+.sidebar-input {
+	flex: 1;
+	padding: 0.6rem 1rem;
+	border-radius: 8px;
+	border: 1px solid var(--background-modifier-border);
+	color: #fff;
+	font-size: 1rem;
+	outline: none;
+}
+.sidebar-search-btn {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	padding: 0.5rem 0.7rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.sidebar-search-btn:hover {
+	background: #282c34;
+	color: #fff;
+}
+
+.sidebar-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem;
+	padding: 0 0 0.5rem 0;
+}
+.sidebar-nav-item {
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+	padding: 0.7rem 1.5rem;
+	color: #a3a3a3;
+	font-size: 0.95rem;
+	font-weight: 400;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background 0.13s, color 0.13s;
+	margin: 0 0.5rem;
+}
+.sidebar-nav-item:hover {
+	background: #23272e;
+	color: #e0e0e0;
+}
+.sidebar-nav-item.active, .sidebar-nav-item.active:hover {
+	background: #23272e;
+	color: #4f8cff;
+}
+.sidebar-nav-icon {
+	font-size: 1.2rem;
+	width: 1.7rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.sidebar-nav-label {
+	flex: 1;
+	font-weight: 400;
+	color: #a3a3a3;
+	font-size: 0.95rem;
+}
+
+.sidebar-section-heading {
+	padding: 0.7rem 1.5rem 0.2rem 1.5rem;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #888;
+	letter-spacing: 0.03em;
+	margin-top: 0.5rem;
+}
+
+.sidebar-project-section {
+	margin-bottom: 0.5rem;
+}
+.sidebar-project-title {
+	padding: 0.5rem 1.5rem 0.2rem 1.5rem;
+	font-size: 1.02rem;
+	font-weight: 600;
+	color: #b0b3b8;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.sidebar-project-icon {
+	font-size: 1.1rem;
+	margin-right: 0.5rem;
+}
+.sidebar-nav-subitem {
+	padding-left: 2.7rem;
+	font-size: 0.98rem;
+	color: #b0b3b8;
+	border-radius: 6px;
+}
+.sidebar-nav-subitem.active, .sidebar-nav-subitem.active:hover {
+	background: #23272e;
+	color: #4f8cff;
+}
+
+/* Hide scrollbars for sidebar */
+.kanban-sidebar::-webkit-scrollbar {
+	display: none;
+}
+.kanban-sidebar {
+	scrollbar-width: none;
+}
+
+/* Responsive: shrink sidebar on mobile */
+@media (max-width: 768px) {
+	.kanban-sidebar {
+		width: 100vw;
+		min-width: 0;
+	}
+}
+
+/* --- End Modern Sidebar Styles --- */
+
+.sidebar-header-app.sidebar-workspace-selector {
+	cursor: pointer;
+	position: relative;
+	user-select: none;
+	transition: background 0.13s;
+	padding-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.sidebar-header-app.sidebar-workspace-selector:hover {
+	background: #23272e;
+}
+.sidebar-workspace-chevron {
+	display: flex;
+	align-items: center;
+	margin-left: 0.5rem;
+	color: #a3a3a3;
+	transition: transform 0.2s;
+}
+.sidebar-header-app.sidebar-workspace-selector[aria-expanded="true"] .sidebar-workspace-chevron {
+	transform: rotate(180deg);
+}
+.sidebar-workspace-dropdown {
+	position: absolute;
+	top: 60px;
+	left: 16px;
+	width: calc(100% - 32px);
+	max-width: 320px;
+	background: var(--background-secondary);
+	border-radius: 10px;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+	z-index: 100;
+	padding: 0.3rem 0;
+	border: 1px solid var(--background-modifier-border);
+}
+.sidebar-workspace-item {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	padding: 0.7rem 1.2rem;
+	font-size: 0.97rem;
+	color: #a3a3a3;
+	cursor: pointer;
+	border-radius: 8px;
+	transition: background 0.13s, color 0.13s;
+}
+.sidebar-workspace-item:hover {
+	background: #282c34;
+	color: #fff;
+}
+.sidebar-workspace-name {
+	font-weight: 400;
+}
+
+.kanban-add-task-btn {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 0.5em;
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    opacity: 0.7;
+    transition: color 0.15s, opacity 0.15s;
+  }
+  .kanban-add-task-btn:hover {
+    color: var(--text-normal);
+    opacity: 1;
+  }
+
+.kanban-task-title-done {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+
+
+
