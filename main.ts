@@ -50,7 +50,7 @@ export default class MyPlugin extends Plugin {
 					'assignee: ',
 					'priority: ',
 					'estimate_hours: ',
-					'due: ',
+					'due_date: ',
 					'started_at: ',
 					'completed_at: ',
 					'project: ',

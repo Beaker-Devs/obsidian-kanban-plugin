@@ -9,7 +9,7 @@ export interface Task {
   priority?: string;
   project?: string;
   estimate_hours?: number;
-  due?: string;
+  due_date?: string;
   started_at?: string;
   completed_at?: string;
   author?: string;
@@ -41,34 +41,47 @@ const TaskPriorityIndicator: React.FC<{ priority?: string; isDone: boolean }> = 
   priority, 
   isDone 
 }) => {
+  const dotStyle: React.CSSProperties = {
+    display: 'inline-block',
+    width: '0.7em',
+    height: '0.7em',
+    minWidth: '0.7em',
+    minHeight: '0.7em',
+    maxWidth: '0.7em',
+    maxHeight: '0.7em',
+    borderRadius: '50%',
+    marginRight: '0.5em',
+    verticalAlign: 'middle',
+    background: isDone ? '#006a00' : undefined,
+    flexShrink: 0,
+  };
+
   if (isDone) {
-    return (
-      <span 
-        style={{ 
-          display: 'inline-block', 
-          width: '0.7em', 
-          height: '0.7em', 
-          borderRadius: '50%', 
-          marginRight: '0.5em', 
-          background: '#006a00', 
-          verticalAlign: 'middle' 
-        }}
-      />
-    );
+    return <span style={dotStyle} />;
   }
 
   if (!priority) return null;
 
-  return (
-    <span className={`priority-dot priority-${String(priority).toLowerCase()}`} />
-  );
+  return <span className={`priority-dot priority-${String(priority).toLowerCase()}`} style={dotStyle} />;
 };
 
 const TaskTitle: React.FC<{ title: string; isDone: boolean }> = ({ title, isDone }) => {
-  if (isDone) {
-    return <span className="kanban-task-title-done">{title}</span>;
-  }
-  return <>{title}</>;
+  return (
+    <span
+      className={isDone ? "kanban-task-title-done" : undefined}
+      style={{
+        display: '-webkit-box',
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: 'vertical',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'normal',
+        maxHeight: '2.8em',
+      }}
+    >
+      {title}
+    </span>
+  );
 };
 
 const TaskMetaPill: React.FC<{ 
@@ -90,8 +103,8 @@ const TaskMeta: React.FC<{ task: Task }> = ({ task }) => (
     {task.estimate_hours != null && (
       <TaskMetaPill icon="estimate" text={`${task.estimate_hours}h`} className="estimate" />
     )}
-    {task.due && (
-      <TaskMetaPill icon="due" text={task.due} className="due" />
+    {task.due_date && (
+      <TaskMetaPill icon="due" text={task.due_date} className="due" />
     )}
     {task.started_at && (
       <TaskMetaPill icon="started" text={task.started_at} className="started" />
